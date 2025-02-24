@@ -132,11 +132,12 @@ const Index = () => {
                 <span className="ml-2">{sortDirection === 'asc' ? 'Oldest First' : 'Newest First'}</span>
               </Button>
               <Button
+                variant="outline"
                 onClick={handleDownload}
-                className="bg-primary hover:bg-primary/90"
+                className="bg-white hover:bg-secondary"
+                size="icon"
               >
-                <Download className="h-4 w-4 mr-2" />
-                Download
+                <Download className="h-4 w-4" />
               </Button>
             </div>
           </div>
