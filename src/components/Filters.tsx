@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -145,7 +144,7 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
               key={tag}
               variant="outline"
               size="sm"
-              className="hover:bg-primary hover:text-white transition-colors"
+              className="hover:bg-primary hover:text-white transition-colors bg-secondary"
             >
               {tag}
             </Button>

@@ -31,7 +31,7 @@ export const ResultCard = ({ result, onClick }: ResultCardProps) => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
-            className="text-primary hover:text-secondary transition-colors"
+            className="text-primary hover:bg-secondary rounded-full p-1 transition-colors"
           >
             <ExternalLink className="h-5 w-5" />
           </a>

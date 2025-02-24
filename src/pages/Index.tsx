@@ -4,6 +4,9 @@ import { SearchBar } from "@/components/SearchBar";
 import { Filters } from "@/components/Filters";
 import { ResultCard } from "@/components/ResultCard";
 import { DetailModal } from "@/components/DetailModal";
+import { Button } from "@/components/ui/button";
+import { Download, SortAsc, SortDesc } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
 
 // Mock data for demonstration
 const mockResults = [
@@ -39,15 +42,51 @@ const mockResults = [
 
 const Index = () => {
   const [selectedResult, setSelectedResult] = useState<any>(null);
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
+  const { toast } = useToast();
+
+  const sortedResults = [...mockResults].sort((a, b) => {
+    const dateA = new Date(a.eventDate).getTime();
+    const dateB = new Date(b.eventDate).getTime();
+    return sortDirection === 'asc' ? dateA - dateB : dateB - dateA;
+  });
+
+  const handleDownload = () => {
+    // In a real application, this would trigger the actual download
+    toast({
+      title: "Download Started",
+      description: "Your download will begin shortly.",
+      duration: 3000,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-[#f8f9fa]">
       <div className="flex">
         <Filters onFilterChange={() => {}} />
         <div className="flex-1 p-8 space-y-8">
-          <SearchBar />
+          <div className="flex justify-between items-center max-w-4xl mx-auto">
+            <SearchBar />
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc')}
+                className="bg-white hover:bg-secondary"
+              >
+                {sortDirection === 'asc' ? <SortAsc className="h-4 w-4" /> : <SortDesc className="h-4 w-4" />}
+                <span className="ml-2">{sortDirection === 'asc' ? 'Oldest First' : 'Newest First'}</span>
+              </Button>
+              <Button
+                onClick={handleDownload}
+                className="bg-primary hover:bg-primary/90"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Download
+              </Button>
+            </div>
+          </div>
           <div className="grid gap-6 max-w-4xl mx-auto">
-            {mockResults.map((result) => (
+            {sortedResults.map((result) => (
               <ResultCard
                 key={result.id}
                 result={result}
