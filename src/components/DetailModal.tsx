@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, MapPin, Book, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, Book, ExternalLink, User, Globe } from "lucide-react";
 
 interface DetailModalProps {
   isOpen: boolean;
@@ -14,10 +14,12 @@ interface DetailModalProps {
   result: {
     title: string;
     location: string;
-    date: string;
+    eventDate: string;
+    publishDate: string;
     author: string;
     language: string;
     type: string;
+    platform: string;
     sourceUrl: string;
     description: string;
     tags: string[];
@@ -43,24 +45,20 @@ export const DetailModal = ({ isOpen, onClose, result }: DetailModalProps) => {
         </DialogHeader>
 
         <div className="space-y-6">
+          <div className="flex items-center gap-1 text-sm text-gray-600">
+            <MapPin className="h-4 w-4" />
+            <span>{result.location}</span>
+          </div>
+
           <div className="flex flex-wrap gap-4 text-sm text-gray-600">
-            <div className="flex items-center gap-1">
-              <Calendar className="h-4 w-4" />
-              <span>{result.date}</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <MapPin className="h-4 w-4" />
-              <span>{result.location}</span>
-            </div>
             <div className="flex items-center gap-1">
               <Book className="h-4 w-4" />
               <span>{result.type}</span>
             </div>
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{result.author}</Badge>
-            <Badge variant="outline">{result.language}</Badge>
+            <div className="flex items-center gap-1">
+              <User className="h-4 w-4" />
+              <span>{result.author}</span>
+            </div>
           </div>
 
           <div className="text-gray-700">{result.description}</div>
@@ -77,6 +75,11 @@ export const DetailModal = ({ isOpen, onClose, result }: DetailModalProps) => {
                 </Badge>
               ))}
             </div>
+          </div>
+
+          <div className="text-sm text-gray-500 border-t pt-4">
+            <div>Event Date: {result.eventDate}</div>
+            <div>Published at: {result.platform}, {result.publishDate}</div>
           </div>
         </div>
       </DialogContent>

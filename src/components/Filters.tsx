@@ -15,44 +15,46 @@ interface FiltersProps {
 }
 
 export const Filters = ({ onFilterChange }: FiltersProps) => {
-  const [startDate, setStartDate] = React.useState<Date>();
-  const [endDate, setEndDate] = React.useState<Date>();
+  const [eventStartDate, setEventStartDate] = React.useState<Date>();
+  const [eventEndDate, setEventEndDate] = React.useState<Date>();
+  const [publishStartDate, setPublishStartDate] = React.useState<Date>();
+  const [publishEndDate, setPublishEndDate] = React.useState<Date>();
 
-  const mediaTypes = ["Book", "Article", "Journal", "Conference Paper"];
-  const languages = ["English", "Spanish", "French", "German"];
-  const locations = ["Europe", "North America", "Asia", "Africa"];
-  const availability = ["Open Access", "Subscription", "Purchase Required", "Free"];
+  const types = ["Official Statement", "News Article", "Press Release", "Report"];
+  const platforms = ["NYT", "Reuters", "AP", "BBC", "CNN"];
+  const languages = ["English", "French", "German"];
+  const locations = ["Europe", "North America", "Asia", "Africa", "South America", "Oceania"];
 
   const tags = [
-    "Research",
+    "Politics",
+    "Economy",
+    "Environment",
     "Technology",
-    "Science",
-    "History",
-    "Literature",
-    "Engineering",
-    "Mathematics",
-    "Physics",
-    "Chemistry",
-    "Biology",
+    "Health",
+    "Education",
+    "Security",
+    "Human Rights",
+    "Trade",
+    "Culture",
   ];
 
   return (
     <div className="w-64 bg-white p-6 border-r min-h-screen space-y-6 animate-fade-in">
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Date Range</h3>
+        <h3 className="text-lg font-semibold">Event Date Range</h3>
         <div className="space-y-2">
           <Popover>
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-full justify-start">
                 <Calendar className="mr-2 h-4 w-4" />
-                {startDate ? startDate.toLocaleDateString() : "Start Date"}
+                {eventStartDate ? eventStartDate.toLocaleDateString() : "Start Date"}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 bg-white">
               <CalendarComponent
                 mode="single"
-                selected={startDate}
-                onSelect={setStartDate}
+                selected={eventStartDate}
+                onSelect={setEventStartDate}
                 initialFocus
               />
             </PopoverContent>
@@ -61,14 +63,52 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
             <PopoverTrigger asChild>
               <Button variant="outline" className="w-full justify-start">
                 <Calendar className="mr-2 h-4 w-4" />
-                {endDate ? endDate.toLocaleDateString() : "End Date"}
+                {eventEndDate ? eventEndDate.toLocaleDateString() : "End Date"}
               </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 bg-white">
               <CalendarComponent
                 mode="single"
-                selected={endDate}
-                onSelect={setEndDate}
+                selected={eventEndDate}
+                onSelect={setEventEndDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+      </div>
+
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Publication Date Range</h3>
+        <div className="space-y-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className="w-full justify-start">
+                <Calendar className="mr-2 h-4 w-4" />
+                {publishStartDate ? publishStartDate.toLocaleDateString() : "Start Date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 bg-white">
+              <CalendarComponent
+                mode="single"
+                selected={publishStartDate}
+                onSelect={setPublishStartDate}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" className="w-full justify-start">
+                <Calendar className="mr-2 h-4 w-4" />
+                {publishEndDate ? publishEndDate.toLocaleDateString() : "End Date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0 bg-white">
+              <CalendarComponent
+                mode="single"
+                selected={publishEndDate}
+                onSelect={setPublishEndDate}
                 initialFocus
               />
             </PopoverContent>
@@ -77,10 +117,10 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
       </div>
 
       {[
-        { title: "Media Type", items: mediaTypes },
-        { title: "Language", items: languages },
+        { title: "Type", items: types },
+        { title: "Platform", items: platforms },
         { title: "Location", items: locations },
-        { title: "Availability", items: availability },
+        { title: "Language", items: languages },
       ].map((filter) => (
         <div key={filter.title} className="space-y-4">
           <h3 className="text-lg font-semibold">{filter.title}</h3>
