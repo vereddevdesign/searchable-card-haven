@@ -1,5 +1,6 @@
+
 import React from "react";
-import { Calendar } from "lucide-react";
+import { Calendar, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -18,6 +19,14 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
   const [eventEndDate, setEventEndDate] = React.useState<Date>();
   const [publishStartDate, setPublishStartDate] = React.useState<Date>();
   const [publishEndDate, setPublishEndDate] = React.useState<Date>();
+  const [collapsedSections, setCollapsedSections] = React.useState<Record<string, boolean>>({});
+
+  const toggleSection = (section: string) => {
+    setCollapsedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
+  };
 
   const types = ["Official Statement", "News Article", "Press Release", "Report"];
   const platforms = ["NYT", "Reuters", "AP", "BBC", "CNN"];
@@ -37,10 +46,25 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
     "Culture",
   ];
 
+  const FilterSection = ({ title, children }: { title: string, children: React.ReactNode }) => (
+    <div className="space-y-4">
+      <div 
+        className="flex justify-between items-center cursor-pointer" 
+        onClick={() => toggleSection(title)}
+      >
+        <h3 className="text-lg font-semibold">{title}</h3>
+        {collapsedSections[title] ? 
+          <ChevronDown className="h-4 w-4 text-gray-500" /> : 
+          <ChevronUp className="h-4 w-4 text-gray-500" />
+        }
+      </div>
+      {!collapsedSections[title] && children}
+    </div>
+  );
+
   return (
     <div className="w-64 bg-white p-6 border-r min-h-screen space-y-6 animate-fade-in">
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Event Date Range</h3>
+      <FilterSection title="Event Date Range">
         <div className="space-y-2">
           <Popover>
             <PopoverTrigger asChild>
@@ -75,10 +99,9 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
             </PopoverContent>
           </Popover>
         </div>
-      </div>
+      </FilterSection>
 
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Publication Date Range</h3>
+      <FilterSection title="Publication Date Range">
         <div className="space-y-2">
           <Popover>
             <PopoverTrigger asChild>
@@ -113,7 +136,7 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
             </PopoverContent>
           </Popover>
         </div>
-      </div>
+      </FilterSection>
 
       {[
         { title: "Type", items: types },
@@ -121,8 +144,7 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
         { title: "Location", items: locations },
         { title: "Language", items: languages },
       ].map((filter) => (
-        <div key={filter.title} className="space-y-4">
-          <h3 className="text-lg font-semibold">{filter.title}</h3>
+        <FilterSection key={filter.title} title={filter.title}>
           <div className="space-y-2">
             {filter.items.map((item) => (
               <div key={item} className="flex items-center space-x-2">
@@ -133,11 +155,10 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
               </div>
             ))}
           </div>
-        </div>
+        </FilterSection>
       ))}
 
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Tags</h3>
+      <FilterSection title="Tags">
         <div className="flex flex-wrap gap-2">
           {tags.map((tag) => (
             <Button
@@ -150,7 +171,7 @@ export const Filters = ({ onFilterChange }: FiltersProps) => {
             </Button>
           ))}
         </div>
-      </div>
+      </FilterSection>
     </div>
   );
 };

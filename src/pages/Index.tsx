@@ -38,6 +38,62 @@ const mockResults = [
     description: "Leading technology companies have joined forces to establish a comprehensive framework for ethical AI development and implementation.",
     tags: ["Technology", "AI", "Ethics", "Business"],
   },
+  {
+    id: 3,
+    title: "European Union Unveils New Digital Privacy Framework",
+    location: "Brussels, Belgium",
+    eventDate: "2024-03-10",
+    publishDate: "March 11, 2024",
+    author: "Sophie Dubois",
+    language: "English",
+    type: "Official Statement",
+    platform: "Reuters",
+    sourceUrl: "#",
+    description: "The EU Commission has announced comprehensive new guidelines for data protection and digital privacy across member states.",
+    tags: ["Technology", "Privacy", "EU", "Regulation"],
+  },
+  {
+    id: 4,
+    title: "Major Breakthrough in Renewable Energy Storage",
+    location: "Berlin, Germany",
+    eventDate: "2024-03-05",
+    publishDate: "March 6, 2024",
+    author: "Klaus Weber",
+    language: "German",
+    type: "News Article",
+    platform: "AP",
+    sourceUrl: "#",
+    description: "Scientists announce revolutionary new battery technology that could transform renewable energy storage capabilities.",
+    tags: ["Science", "Technology", "Energy", "Environment"],
+  },
+  {
+    id: 5,
+    title: "Global Trade Summit Addresses Supply Chain Resilience",
+    location: "Singapore",
+    eventDate: "2024-03-12",
+    publishDate: "March 13, 2024",
+    author: "Li Wei",
+    language: "English",
+    type: "Press Release",
+    platform: "BBC",
+    sourceUrl: "#",
+    description: "International business leaders and policymakers gather to discuss strategies for strengthening global supply chains.",
+    tags: ["Economics", "Trade", "Business", "International Relations"],
+  },
+  {
+    id: 6,
+    title: "New Educational Initiative Launches Across Asia Pacific",
+    location: "Tokyo, Japan",
+    eventDate: "2024-03-08",
+    publishDate: "March 9, 2024",
+    author: "Tanaka Yuki",
+    language: "English",
+    type: "News Article",
+    platform: "AP",
+    sourceUrl: "#",
+    description: "Regional cooperation program aims to enhance digital literacy and STEM education across Asia Pacific nations.",
+    tags: ["Education", "Technology", "Asia", "Development"],
+  }
 ];
 
 const Index = () => {
@@ -52,7 +108,6 @@ const Index = () => {
   });
 
   const handleDownload = () => {
-    // In a real application, this would trigger the actual download
     toast({
       title: "Download Started",
       description: "Your download will begin shortly.",
@@ -85,14 +140,20 @@ const Index = () => {
               </Button>
             </div>
           </div>
-          <div className="grid gap-6 max-w-4xl mx-auto">
-            {sortedResults.map((result) => (
-              <ResultCard
-                key={result.id}
-                result={result}
-                onClick={() => setSelectedResult(result)}
-              />
-            ))}
+          
+          <div className="max-w-4xl mx-auto">
+            <p className="text-gray-600 mb-4">
+              Showing {sortedResults.length} results
+            </p>
+            <div className="grid gap-6">
+              {sortedResults.map((result) => (
+                <ResultCard
+                  key={result.id}
+                  result={result}
+                  onClick={() => setSelectedResult(result)}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
